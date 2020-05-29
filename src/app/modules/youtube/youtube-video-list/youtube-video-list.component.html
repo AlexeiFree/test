@@ -1,0 +1,14 @@
+<app-youtube-video-item
+  *ngFor="let video of videosFiltered$ | async; trackBy: videosTrackBy"
+  [video]="video"
+  class="mb-5"
+></app-youtube-video-item>
+
+<div
+  *ngIf="videosLoading$ | async"
+  class="text-center py-3"
+>
+  <span
+    class="spinner-border"
+  ></span>
+</div>
