@@ -16,7 +16,7 @@ export class TypedformBuilder<T extends {[key: string]: any}> extends FormBuilde
     } | null
   ): ITypedFormGroup<T> {
     return super.group(controlsConfig, options) as ITypedFormGroup<T>;
-  };
+  }
 
   array<V = any>(
     controlsConfig: V[],
