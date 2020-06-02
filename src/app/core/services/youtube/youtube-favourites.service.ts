@@ -1,11 +1,11 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import * as YOUTUBE from '../../../core/constants/google-api/youtube';
 import { skip } from 'rxjs/operators';
-import * as storageKeys from '../../../core/constants/local-storage-keys.constant';
 import { LocalStorageService } from '../local-storage.service';
 import { GoogleApiService } from '../google-api/google-api.service ';
-import { YoutubeService } from './youtube-common.service';
+import { YoutubeCommonService } from './youtube-common.service';
+import { LocalStorageKeys } from '../../di-tokens/local-storage/local-storage-keys.di-token';
+import { YOUTUBE_LIST_LIMIT } from '../../di-tokens/google-api/youtube.di-token';
 
 
 @Injectable({
@@ -22,9 +22,11 @@ export class YoutubeFavouritesService {
     private ngZone: NgZone,
     private localStorageService: LocalStorageService,
     private googleApiService: GoogleApiService,
-    private youtubeService: YoutubeService,
+    private youtubeCommonService: YoutubeCommonService,
+    @Inject(LocalStorageKeys) private storageKeys: LocalStorageKeys,
+    @Inject(YOUTUBE_LIST_LIMIT) private youtubeListLimit: number,
   ) {
-    let favourites = this.localStorageService.getItem<string[]>(storageKeys.YOUTUBE_VIDEOS_FAVOURITES);
+    let favourites = this.localStorageService.getItem<string[]>(this.storageKeys.YOUTUBE_VIDEOS_FAVOURITES);
 
     if (!favourites) {
       favourites = [];
@@ -42,7 +44,7 @@ export class YoutubeFavouritesService {
             this.getFavouritesVideos(true);
 
           } else {
-            this.youtubeService.getTopVideos(true);
+            this.youtubeCommonService.getTopVideos(true);
           }
         }
       );
@@ -59,11 +61,11 @@ export class YoutubeFavouritesService {
   getFavouritesVideos(clear = false): void {
     const favourites = this.favouritesListBehaviorSubject$.value;
 
-    this.youtubeService.getVideos(
+    this.youtubeCommonService.getVideos(
       {
         part: 'snippet',
         id: favourites.join(','),
-        maxResults: YOUTUBE.MAX_RESULTS,
+        maxResults: this.youtubeListLimit,
       },
       clear
     );

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import Video = gapi.client.youtube.Video;
-import { YoutubeService } from '../../../core/services/youtube/youtube-common.service';
+import { YoutubeCommonService } from '../../../core/services/youtube/youtube-common.service';
 
 
 @Component({
@@ -12,15 +12,15 @@ import { YoutubeService } from '../../../core/services/youtube/youtube-common.se
 export class YoutubeVideoListComponent {
 
   get videosFiltered$() {
-    return this.youtubeService.videosFiltered$;
+    return this.youtubeCommonService.videosFiltered$;
   }
 
   get videosLoading$() {
-    return this.youtubeService.videosLoading$;
+    return this.youtubeCommonService.videosLoading$;
   }
 
   constructor(
-    private youtubeService: YoutubeService,
+    private youtubeCommonService: YoutubeCommonService,
   ) { }
 
   videosTrackBy(index: number, video: Video) {

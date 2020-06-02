@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, iif, of, Subscription } from 'rxjs';
-import * as YOUTUBE from '../../../core/constants/google-api/youtube';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
 import { IVideoListRequstOptions } from '../../interfaces/youtube-video.interface';
 import { LocalStorageService } from '../local-storage.service';
@@ -8,12 +7,13 @@ import { asyncArrayPipe } from '../../utilities/rxjs.utilities';
 import Video = gapi.client.youtube.Video;
 import { GoogleApiService } from '../google-api/google-api.service ';
 import { YoutubeApiService } from '../google-api/youtube-api.service';
+import { YOUTUBE_LIST_LIMIT } from '../../di-tokens/google-api/youtube.di-token';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class YoutubeService {
+export class YoutubeCommonService {
   private videosBehaviorSubject$ = new BehaviorSubject<Video[]>([]);
   private videosLoadingBehaviorSubject$ = new BehaviorSubject(false);
   private videosLoadedBehaviorSubject$ = new BehaviorSubject(false);
@@ -50,6 +50,7 @@ export class YoutubeService {
     private localStorageService: LocalStorageService,
     private googleApiService: GoogleApiService,
     private youtubeApiService: YoutubeApiService,
+    @Inject(YOUTUBE_LIST_LIMIT) private youtubeListLimit: number,
   ) {
     this.googleApiService.apiLoaded$.subscribe(() => this.getTopVideos());
   }
@@ -68,7 +69,7 @@ export class YoutubeService {
       {
         part: 'snippet',
         chart: 'mostPopular',
-        maxResults: YOUTUBE.MAX_RESULTS,
+        maxResults: this.youtubeListLimit,
         pageToken: clear ? null : this.nextPageToken,
       },
       clear

@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, withLatestFrom } from 'rxjs/operators';
-import { YoutubeService } from '../../core/services/youtube/youtube-common.service';
+import { YoutubeCommonService } from '../../core/services/youtube/youtube-common.service';
 import { YoutubeFavouritesService } from '../../core/services/youtube/youtube-favourites.service';
 
 
@@ -18,7 +18,7 @@ export class YoutubeComponent implements AfterViewInit {
   @ViewChild('scrollContainer', {static: false}) scrollContainer: ElementRef<HTMLElement>;
 
   constructor(
-    private youtubeService: YoutubeService,
+    private youtubeCommonService: YoutubeCommonService,
     private youtubeFavouritesService: YoutubeFavouritesService,
   ) { }
 
@@ -27,8 +27,8 @@ export class YoutubeComponent implements AfterViewInit {
       .pipe(
         debounceTime(100),
         withLatestFrom(
-          this.youtubeService.videosLoaded$,
-          this.youtubeService.filterQuery$,
+          this.youtubeCommonService.videosLoaded$,
+          this.youtubeCommonService.filterQuery$,
           this.youtubeFavouritesService.favouritesMode$
         )
       )
@@ -41,7 +41,7 @@ export class YoutubeComponent implements AfterViewInit {
           !isLoaded &&
           this.scrollContainer.nativeElement.scrollTop > this.maxScroll
         ) {
-          this.youtubeService.getTopVideos();
+          this.youtubeCommonService.getTopVideos();
         }
       });
   }

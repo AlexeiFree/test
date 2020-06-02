@@ -1,4 +1,4 @@
-class DomSanitizerOptions {
+export class DomSanitizerOptions {
   readonly HTML = 'html';
   readonly STYLE = 'style';
   readonly SCRIPT = 'script';

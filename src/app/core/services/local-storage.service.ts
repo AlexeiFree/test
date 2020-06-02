@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import * as storageKeys from '../constants/local-storage-keys.constant';
+import { Inject, Injectable } from '@angular/core';
+import { LocalStorageKeys } from '../di-tokens/local-storage/local-storage-keys.di-token';
+import { BrowserStorage } from '../di-tokens/local-storage/local-storage-common.di-token';
 
 
 @Injectable({
@@ -7,20 +8,25 @@ import * as storageKeys from '../constants/local-storage-keys.constant';
 })
 export class LocalStorageService {
 
+  constructor(
+    @Inject(BrowserStorage) private storage: Storage,
+    @Inject(LocalStorageKeys) private storageKeys: LocalStorageKeys,
+  ) {}
+
   getItem<T = any>(key: string): T {
-    return JSON.parse(localStorage.getItem(key));
+    return JSON.parse(this.storage.getItem(key));
   }
 
   setItem(key: string, value): void {
-    localStorage.setItem(key, JSON.stringify(value));
+    this.storage.setItem(key, JSON.stringify(value));
   }
 
   removeItem(key: string): void {
-    localStorage.removeItem(key);
+    this.storage.removeItem(key);
   }
 
   isInArray(key: string, value): boolean {
-    const array = this.getItem<string[]>(storageKeys.YOUTUBE_VIDEOS_FAVOURITES);
+    const array = this.getItem<string[]>(this.storageKeys.YOUTUBE_VIDEOS_FAVOURITES);
 
     if (!array) {
       return false;
@@ -32,7 +38,7 @@ export class LocalStorageService {
   }
 
   addToArray(key: string, value): void {
-    const array = this.getItem<string[]>(storageKeys.YOUTUBE_VIDEOS_FAVOURITES) || [];
+    const array = this.getItem<string[]>(this.storageKeys.YOUTUBE_VIDEOS_FAVOURITES) || [];
 
     const valueString = JSON.stringify(value);
 
@@ -44,7 +50,7 @@ export class LocalStorageService {
   }
 
   removeFromArray(key: string, value): void {
-    const array = this.getItem<string[]>(storageKeys.YOUTUBE_VIDEOS_FAVOURITES);
+    const array = this.getItem<string[]>(this.storageKeys.YOUTUBE_VIDEOS_FAVOURITES);
 
     if (!array) {
       return;

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ITypedFormGroup } from '../../../core/interfaces/forms.interface';
 import { TypedformBuilder } from '../../../core/services/typed-form-builder.service';
-import { YoutubeService } from '../../../core/services/youtube/youtube-common.service';
+import { YoutubeCommonService } from '../../../core/services/youtube/youtube-common.service';
 import { YoutubeFavouritesService } from '../../../core/services/youtube/youtube-favourites.service';
 
 
@@ -22,7 +22,7 @@ export class YoutubeVideoListFilterComponent implements OnInit {
   filterForm: ITypedFormGroup<IFilterFormModel>;
 
   constructor(
-    private youtubeService: YoutubeService,
+    private youtubeCommonService: YoutubeCommonService,
     private youtubeFavouritesService: YoutubeFavouritesService,
     private typedformBuilder: TypedformBuilder<IFilterFormModel>,
   ) {
@@ -41,7 +41,7 @@ export class YoutubeVideoListFilterComponent implements OnInit {
     this.filterForm.controls.searchQuery.valueChanges
       .subscribe(
         value => {
-          this.youtubeService.filterVideosByTitle(value);
+          this.youtubeCommonService.filterVideosByTitle(value);
         }
       );
   }

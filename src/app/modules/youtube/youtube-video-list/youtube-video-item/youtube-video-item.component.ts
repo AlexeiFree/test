@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { domSanitizerOptions } from '../../../../core/constants/dom-sanitizer.constant';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import Video = gapi.client.youtube.Video;
 import { FormControl } from '@angular/forms';
 import { YoutubeFavouritesService } from '../../../../core/services/youtube/youtube-favourites.service';
+import { DomSanitizerOptionsToken } from '../../../../core/di-tokens/dom-sanitizer.di-token';
+import { DomSanitizerOptions } from '../../../../core/constants/dom-sanitizer.constant';
 
 
 @Component({
@@ -19,12 +20,9 @@ export class YoutubeVideoItemComponent implements OnInit {
   isTriggered = false;
   isFavourite: FormControl;
 
-  get domSanitizerOptions() {
-    return domSanitizerOptions;
-  }
-
   constructor(
     private youtubeFavouritesService: YoutubeFavouritesService,
+    @Inject(DomSanitizerOptionsToken) private domSanitizerOptions: DomSanitizerOptions,
   ) { }
 
   ngOnInit(): void {
