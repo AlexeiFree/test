@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class TypedFormBuilder<T extends {[key: string]: any}> extends FormBuilder {
   group(
     controlsConfig: {
-      [p in keyof T]: any;
+      [p in keyof T]: T[p];
     },
     options?: AbstractControlOptions | {
       [key: string]: any;
@@ -18,11 +18,11 @@ export class TypedFormBuilder<T extends {[key: string]: any}> extends FormBuilde
     return super.group(controlsConfig, options) as ITypedFormGroup<T>;
   }
 
-  array<V = any>(
-    controlsConfig: V[],
+  array<U = any>(
+    controlsConfig: U[],
     validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
     asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
-  ): ITypedFormArray<V> {
+  ): ITypedFormArray<U> {
     return super.array(controlsConfig, validatorOrOpts, asyncValidator);
   }
 }

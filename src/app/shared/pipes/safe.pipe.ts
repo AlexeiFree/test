@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-import { domSanitizerOptions, DomSanitizerOptionType } from '../constants/dom-sanitizer.constant';
+import { domSanitizerOptions, DomSanitizerOptionType } from '../../core/constants/dom-sanitizer.constant';
 
 @Pipe({
   name: 'safe'
