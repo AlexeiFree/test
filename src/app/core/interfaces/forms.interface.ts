@@ -1,7 +1,11 @@
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FormControl, AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 export interface ITypedAbstractControl<T = any> extends AbstractControl {
+  readonly valueChanges: Observable<T> | null;
+}
+
+export interface ITypedFormControl<T = any> extends FormControl {
   readonly valueChanges: Observable<T> | null;
 }
 

@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { YoutubeFavouritesService } from '../../../../core/services/youtube/youtube-favourites.service';
 import { DomSanitizerOptionsToken } from '../../../../core/di-tokens/dom-sanitizer.di-token';
 import { DomSanitizerOptions } from '../../../../core/constants/dom-sanitizer.constant';
+import { ITypedFormControl } from '../../../../core/interfaces/forms.interface';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class YoutubeVideoItemComponent implements OnInit {
   @Input() video: Video;
 
   isTriggered = false;
-  isFavourite: FormControl;
+  isFavourite: ITypedFormControl<boolean>;
 
   constructor(
     private youtubeFavouritesService: YoutubeFavouritesService,
