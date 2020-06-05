@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class TypedformBuilder<T extends {[key: string]: any}> extends FormBuilder {
+export class TypedFormBuilder<T extends {[key: string]: any}> extends FormBuilder {
   group(
     controlsConfig: {
       [p in keyof T]: any;

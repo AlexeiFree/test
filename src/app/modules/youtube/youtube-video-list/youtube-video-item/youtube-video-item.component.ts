@@ -27,7 +27,7 @@ export class YoutubeVideoItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.youtubeFavouritesService.favouritesList$.pipe(first()).subscribe(
-      favouritesList => this.isFavourite =  new FormControl(favouritesList.findIndex(item => item === this.video.id) !== -1)
+      favouritesList => this.isFavourite = new FormControl(favouritesList.findIndex(item => item === this.video.id) !== -1)
     );
 
     this.isFavourite.valueChanges

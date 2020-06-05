@@ -3,7 +3,7 @@ import { BehaviorSubject, combineLatest, iif, of, Subscription } from 'rxjs';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
 import { IVideoListRequstOptions } from '../../interfaces/youtube-video.interface';
 import { LocalStorageService } from '../local-storage.service';
-import { asyncArrayPipe } from '../../utilities/rxjs.utilities';
+import { asyncArraySwitchMap } from '../../utilities/rxjs.utilities';
 import Video = gapi.client.youtube.Video;
 import { GoogleApiService } from '../google-api/google-api.service ';
 import { YoutubeApiService } from '../google-api/youtube-api.service';
@@ -41,7 +41,7 @@ export class YoutubeCommonService {
         ),
         switchMap(data => iif(
           () => this.videosAsyncEmitting,
-          of(data).pipe(asyncArrayPipe()),
+          of(data).pipe(asyncArraySwitchMap()),
           of(data)
         ))
       );

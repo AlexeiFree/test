@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ITypedFormGroup } from '../../../core/interfaces/forms.interface';
-import { TypedformBuilder } from '../../../core/services/typed-form-builder.service';
+import { TypedFormBuilder } from '../../../core/services/typed-form-builder.service';
 import { YoutubeCommonService } from '../../../core/services/youtube/youtube-common.service';
 import { YoutubeFavouritesService } from '../../../core/services/youtube/youtube-favourites.service';
 
@@ -17,16 +17,16 @@ interface IFilterFormModel {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class YoutubeVideoListFilterComponent implements OnInit {
-  @ViewChild('scrollContainer', {static: false}) scrollContainer: ElementRef<HTMLElement>;
+  @ViewChild('scrollContainer', { static: false }) scrollContainer: ElementRef<HTMLElement>;
 
   filterForm: ITypedFormGroup<IFilterFormModel>;
 
   constructor(
     private youtubeCommonService: YoutubeCommonService,
     private youtubeFavouritesService: YoutubeFavouritesService,
-    private typedformBuilder: TypedformBuilder<IFilterFormModel>,
+    private typedFormBuilder: TypedFormBuilder<IFilterFormModel>,
   ) {
-    this.filterForm = typedformBuilder.group({
+    this.filterForm = this.typedFormBuilder.group({
       searchQuery: '',
       favouritesMode: false,
     });
