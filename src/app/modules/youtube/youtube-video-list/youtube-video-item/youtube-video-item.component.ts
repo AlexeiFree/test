@@ -23,7 +23,7 @@ export class YoutubeVideoItemComponent implements OnInit {
 
   constructor(
     private youtubeFavouritesService: YoutubeFavouritesService,
-    @Inject(DomSanitizerOptionsToken) private domSanitizerOptions: DomSanitizerOptions,
+    @Inject(DomSanitizerOptionsToken) private domSanitizerOptions: typeof DomSanitizerOptions,
   ) { }
 
   ngOnInit(): void {
